@@ -1,0 +1,18 @@
+# Secrets — never commit the real API key
+.streamlit/secrets.toml
+.env
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Local sample data (keep the folder, ignore large/real uploads)
+data/sample_docs/*.zip
