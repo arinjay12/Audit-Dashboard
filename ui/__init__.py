@@ -1,1 +1,1 @@
-"""Reusable UI components (KPI cards, panels, Plotly charts). Render-only."""
+# Reusable UI components — KPI cards, insight panels, Plotly charts.
