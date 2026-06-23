@@ -1,7 +1,7 @@
 """
 Smoke test — run this first to confirm your Gemini API key works.
 
-Usage (activate your venv first):
+Usage (activate your venv first), then run: python smoke_test.py
     python smoke_test.py
 """
 

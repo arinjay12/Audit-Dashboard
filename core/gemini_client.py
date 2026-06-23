@@ -1,15 +1,3 @@
-"""
-Gemini API wrapper. All AI calls in this project go through this module.
-
-Two public functions:
-  generate(prompt)       -> str
-  generate_json(prompt)  -> dict
-
-Model and key are read from Streamlit secrets (local: .streamlit/secrets.toml,
-cloud: Streamlit Cloud secrets UI). Falls back to env var GEMINI_API_KEY so
-the smoke_test.py script can run outside a Streamlit context.
-"""
-
 import json
 import os
 
