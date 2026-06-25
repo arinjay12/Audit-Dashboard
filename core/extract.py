@@ -14,7 +14,12 @@ import zipfile
 
 import fitz                         # PyMuPDF — PDF parsing
 import pandas as pd
+import pytesseract
+from PIL import Image
 from docx import Document           # python-docx — DOCX parsing
+
+# Point pytesseract at the Tesseract executable (Windows default install path)
+pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
 from core.schema import ParsedDoc
 
@@ -32,7 +37,7 @@ def extract_zip(zip_path: str) -> list[ParsedDoc]:
 
     with zipfile.ZipFile(zip_path, "r") as zf:
         entries = [
-            name for name in zf.namelist()
+            name for name in zf.namelist()  
             if not name.endswith("/")
             and not os.path.basename(name).startswith(".")
         ]
@@ -114,8 +119,19 @@ def _parse_pdf(filename: str, file_bytes: bytes) -> ParsedDoc:
         page_text = page.get_text("text").strip()
 
         if not page_text:
-            warnings.append(f"Page {page_num} appears to be a scanned image — text not extractable.")
-            continue
+            # Page is a scanned image — run OCR via Tesseract
+            try:
+                pix = page.get_pixmap(dpi=200)
+                img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
+                page_text = pytesseract.image_to_string(img).strip()
+                if page_text:
+                    warnings.append(f"Page {page_num} was a scanned image — OCR applied.")
+                else:
+                    warnings.append(f"Page {page_num}: OCR returned no text.")
+                    continue
+            except Exception as e:
+                warnings.append(f"Page {page_num}: OCR failed — {e}")
+                continue
 
         lines = [ln for ln in page_text.splitlines() if ln.strip()]
         text_parts.append("\n".join(lines))
@@ -124,6 +140,20 @@ def _parse_pdf(filename: str, file_bytes: bytes) -> ParsedDoc:
             df = table.to_pandas()
             if not df.empty:
                 tables.append(_df_to_dict(df, source=f"{filename} p{page_num}"))
+
+                # Render the table as clearly labelled text so Gemini understands
+                # its structure — columns, and each row with its values explicitly stated.
+                df = df.astype(str)
+                col_names = " | ".join(df.columns.tolist())
+                table_lines = [
+                    f"[TABLE from {filename} page {page_num}]",
+                    f"Columns: {col_names}",
+                ]
+                for row_idx, row in df.iterrows():
+                    row_text = " | ".join(f"{col}: {val}" for col, val in row.items())
+                    table_lines.append(f"Row {row_idx + 1}: {row_text}")
+                table_lines.append("[END TABLE]")
+                text_parts.append("\n".join(table_lines))
 
     pdf.close()
 

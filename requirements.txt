@@ -10,3 +10,5 @@ openpyxl>=3.1                    # pandas engine for .xlsx
 plotly>=5.24                     # charts & risk matrices
 pydantic>=2.9                    # AuditAnalysis schema validation
 python-dotenv>=1.0              # local env var loading (dev convenience)
+pytesseract>=0.3                # OCR for scanned PDF pages (requires Tesseract installed)
+pillow>=10.0                    # image handling for OCR

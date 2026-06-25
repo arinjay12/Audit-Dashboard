@@ -1,8 +1,8 @@
 """
 Smoke test — run this first to confirm your Gemini API key works.
 
-Usage (activate your venv first), then run: python smoke_test.py
-    python smoke_test.py
+Usage (activate your venv first): 
+cd "C:\Users\arinj\claude code\audit-dashboard" && .venv\Scripts\activate && python smoke_test.py
 """
 
 import json
