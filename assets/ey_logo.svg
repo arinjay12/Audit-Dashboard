@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="96" height="96">
+  <!-- EY mark for dark backgrounds: yellow beam over light block letters.
+       Letters are drawn as paths (not <text>) so rendering is font-independent. -->
+  <polygon points="2,38 94,2 94,24" fill="#FFE600"/>
+  <!-- E -->
+  <path fill="#F2F2F5" d="M4,46 H42 V56 H16 V65 H36 V75 H16 V84 H42 V94 H4 Z"/>
+  <!-- Y -->
+  <path fill="#F2F2F5" d="M52,46 H66 L73,60 L80,46 H94 L80,72 V94 H66 V72 Z"/>
+</svg>

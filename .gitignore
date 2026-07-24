@@ -16,3 +16,12 @@ Thumbs.db
 
 # Local sample data (keep the folder, ignore large/real uploads)
 data/sample_docs/*.zip
+
+# Test chat cache (extracted docs + RAG index, rebuilt on demand)
+.cache/
+.cache_multi/
+
+# Dev-only tooling — not part of the shipped app
+.claude/
+_preview_dashboard.py
+_preview_page3.py

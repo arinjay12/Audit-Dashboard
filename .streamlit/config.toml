@@ -1,11 +1,15 @@
-# Dark, professional theme (brief: "clean, professional, dark-mode friendly")
+# Dark, professional theme with an EY-inspired accent: charcoal surfaces +
+# signature yellow (#FFE600) used sparingly for highlights and primary actions.
 [theme]
 base = "dark"
-primaryColor = "#4F8BF9"
-backgroundColor = "#0E1117"
-secondaryBackgroundColor = "#1A1F2B"
-textColor = "#FAFAFA"
+primaryColor = "#FFE600"
+backgroundColor = "#17171E"
+secondaryBackgroundColor = "#23232C"
+textColor = "#F2F2F5"
 font = "sans serif"
 
 [server]
 maxUploadSize = 500   # MB — audit ZIPs can be large
+# Faster startup: skips watching source files (which also scans the huge
+# transformers package). Set back to "auto" while actively developing.
+fileWatcherType = "none"
